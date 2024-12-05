@@ -16,6 +16,7 @@ export const en = {
     share: 'Share',
     shareOn: 'Share on {{platform}}',
     playNow: 'Play Now',
+    playAgain: 'Play Again',
     recentGames: 'Recently Played Games',
   },
   categories: {
@@ -46,7 +47,7 @@ export const en = {
     category: 'Category',
     audienceLanguage: 'Audience Language',
     gameLanguage: 'Game Language',
-    sourceUrl: 'Source URL',
+    sourceUrl: 'Source',
     releaseDate: 'Release Date',
     uploaderId: 'Uploader ID',
     plays: 'Plays',

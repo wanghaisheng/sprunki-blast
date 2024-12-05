@@ -10,6 +10,7 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { Game } from '~/types';
 import { getGameHistory } from '~/utils/gameHistory.server';
+import { Hero } from "~/components/Hero";
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   // Validate language parameter
@@ -47,7 +48,7 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
       .eq('is_new', true)
       .eq('audience_language', lang)
       .order('release_date', { ascending: false })
-      .limit(6)
+      .limit(8)
   ]);
 
   if (featuredGamesResponse.error) {
@@ -88,6 +89,9 @@ export default function LanguageIndex() {
       <Navigation />
       
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Hero */}
+        <Hero />
+
         {/* Recent Games */}
         <RecentPlayedGames games={recentGames} />
 

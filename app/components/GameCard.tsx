@@ -34,6 +34,11 @@ export function GameCard({
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span className="transform rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-2.5 text-lg font-bold text-white shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-indigo-500/50">
+                {t('common.playNow')}
+              </span>
+            </div>
             <div className="absolute left-3 right-3 top-3 flex flex-wrap gap-2">
               {is_new && (
                 <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 px-3 py-1.5 text-sm font-medium text-white shadow-lg shadow-green-500/30 backdrop-blur-sm transition-transform hover:scale-105 dark:shadow-green-900/30">
@@ -56,7 +61,7 @@ export function GameCard({
           </div>
           <div className="flex flex-1 flex-col p-5">
             <div className="flex items-start justify-between gap-3">
-              <h3 className="text-lg font-bold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
+              <h3 className="text-sm font-bold text-gray-900 transition-colors group-hover:text-blue-600 dark:text-white dark:group-hover:text-blue-400">
                 {title}
               </h3>
               {category && (

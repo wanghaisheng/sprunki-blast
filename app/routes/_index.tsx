@@ -9,6 +9,7 @@ import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { Game } from '~/types';
 import { getGameHistory } from '~/utils/gameHistory.server';
+import { Hero } from "~/components/Hero";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   // Fetch recent games from cookie
@@ -29,7 +30,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       .eq('status', 'active')
       .eq('is_new', true)
       .order('release_date', { ascending: false })
-      .limit(6)
+      .limit(8)
   ]);
 
   if (featuredGamesResponse.error) {
@@ -67,6 +68,9 @@ export default function Index() {
       <Navigation />
       
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Hero */}
+        <Hero />
+        
         {/* Recent Games */}
         <RecentPlayedGames games={recentGames} />
 

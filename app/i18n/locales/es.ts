@@ -5,6 +5,7 @@ export const es = {
     keywords: 'juegos casuales, juegos divertidos, juegos gratis',
     play: 'Jugar Ahora',
     playNow: 'Jugar Ahora',
+    playAgain: 'Jugar de Nuevo',
     categories: 'Categorías',
     featured: 'Destacado',
     new: 'Nuevo',

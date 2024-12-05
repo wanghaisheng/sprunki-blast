@@ -5,6 +5,7 @@ export const pt = {
     keywords: 'jogos casuais, jogos divertidos, jogos grátis',
     play: 'Jogar Agora',
     playNow: 'Jogar Agora',
+    playAgain: 'Jogar Novamente',
     categories: 'Categorias',
     featured: 'Destaque',
     new: 'Novo',

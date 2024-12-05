@@ -15,7 +15,8 @@ export const ru = {
     noGames: 'Игры не найдены',
     share: 'Поделиться',
     shareOn: 'Поделиться в {{platform}}',
-    playNow: 'Играть',
+    playNow: 'Играть Сейчас',
+    playAgain: 'Играть Снова',
     recentGames: 'Недавно Сыгранные',
   },
   categories: {

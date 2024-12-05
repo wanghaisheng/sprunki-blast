@@ -15,7 +15,7 @@ export const loader: LoaderFunction = async () => {
     .eq('status', 'active')
     .eq('is_new', true)
     .order('release_date', { ascending: false })
-    .limit(12);
+    .limit(20);
 
   if (error) {
     throw new Error('Failed to fetch new games');

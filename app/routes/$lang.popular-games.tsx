@@ -25,7 +25,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     .eq('audience_language', language)
     .order('plays', { ascending: false })
     .order('likes', { ascending: false })
-    .limit(12);
+    .limit(20);
 
   if (error) {
     throw new Error('Failed to fetch popular games');

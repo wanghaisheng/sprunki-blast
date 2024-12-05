@@ -15,7 +15,8 @@ export const zh = {
     noGames: '暂无游戏',
     share: '分享',
     shareOn: '分享到{{platform}}',
-    playNow: '立即玩',
+    playNow: '立即开玩',
+    playAgain: '再玩一次',
     recentGames: '最近玩过的游戏',
   },
   categories: {

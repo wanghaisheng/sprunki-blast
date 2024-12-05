@@ -5,6 +5,7 @@ export const ja = {
     keywords: 'カジュアルゲーム, 面白いゲーム, 無料ゲーム',
     play: '今すぐプレイ',
     playNow: '今すぐプレイ',
+    playAgain: 'もう一度プレイ',
     categories: 'カテゴリー',
     featured: '注目',
     new: '新着',

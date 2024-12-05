@@ -25,7 +25,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     .eq('is_new', true)
     .eq('audience_language', params.lang)
     .order('release_date', { ascending: false })
-    .limit(12);
+    .limit(20);
 
   if (error) {
     throw new Error('Failed to fetch new games');

@@ -16,6 +16,7 @@ export const ar = {
     share: 'مشاركة',
     shareOn: 'مشاركة على {{platform}}',
     playNow: 'العب الآن',
+    playAgain: 'العب مرة أخرى',
     recentGames: 'الألعاب التي لعبت مؤخراً',
   },
   categories: {

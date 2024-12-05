@@ -5,6 +5,7 @@ export const fr = {
     keywords: 'jeux occasionnels, jeux amusants, jeux gratuits',
     play: 'Jouer Maintenant',
     playNow: 'Jouer Maintenant',
+    playAgain: 'Rejouer',
     categories: 'Catégories',
     featured: 'En Vedette',
     new: 'Nouveau',

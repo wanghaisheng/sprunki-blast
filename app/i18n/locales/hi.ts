@@ -16,6 +16,7 @@ export const hi = {
     share: 'शेयर करें',
     shareOn: '{{platform}} पर शेयर करें',
     playNow: 'अभी खेलें',
+    playAgain: 'फिर से खेलें',
     recentGames: 'हाल ही में खेले गए गेम्स',
   },
   categories: {
