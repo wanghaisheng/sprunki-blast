@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import type { Game } from '~/types';
 import { useLocation } from '@remix-run/react';
 import { YouTubeVideo } from './YouTubeVideo';
