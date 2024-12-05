@@ -6,15 +6,28 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          '"Inter"',
+          '"Outfit"',
           "ui-sans-serif",
           "system-ui",
           "sans-serif",
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-          '"Noto Color Emoji"',
         ],
+      },
+      fontSize: {
+        '2xl': ['1.5rem', {
+          lineHeight: '2rem',
+          letterSpacing: '-0.02em',
+          fontWeight: '600',
+        }],
+        '3xl': ['1.875rem', {
+          lineHeight: '2.25rem',
+          letterSpacing: '-0.02em',
+          fontWeight: '600',
+        }],
+        '4xl': ['2.25rem', {
+          lineHeight: '2.5rem',
+          letterSpacing: '-0.02em',
+          fontWeight: '700',
+        }],
       },
     },
   },
