@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import type { Game } from '~/types';
 import { useLocation } from '@remix-run/react';
+import { YouTubeVideo } from './YouTubeVideo';
 
 interface GameDetailProps {
   game: Game;
@@ -185,12 +186,11 @@ export function GameDetail({ game }: GameDetailProps) {
               </h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 {game.gameplay_videos.map((video, index) => (
-                  <iframe
+                  <YouTubeVideo
                     key={index}
-                    src={video}
+                    url={video}
                     title={`${game.title} gameplay video ${index + 1}`}
                     className="aspect-video w-full rounded-lg"
-                    allowFullScreen
                   />
                 ))}
               </div>

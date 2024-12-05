@@ -37,9 +37,9 @@ export const en = {
   },
   gameDetail: {
     about: 'About',
-    details: 'Game Details',
-    instructions: 'Game Instructions',
-    screenshots: 'Game Screenshots',
+    details: 'Details',
+    instructions: 'Instructions',
+    screenshots: 'Screenshots',
     gameplayVideos: 'Gameplay Videos',
     tags: 'Tags',
     category: 'Category',
