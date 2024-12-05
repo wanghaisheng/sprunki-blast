@@ -16,7 +16,7 @@ export function Hero() {
       alt: "Retro Gaming Console",
     },
     {
-      src: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1200&q=80",
+      src: "https://futurelog-1251943639.cos.accelerate.myqcloud.com/img/202412052114236.jpeg",
       alt: "Gaming Controller in Neon Light",
     },
   ];

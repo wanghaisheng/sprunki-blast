@@ -2,13 +2,17 @@ import { useTranslation } from 'react-i18next';
 import type { Game } from '~/types';
 import { useLocation } from '@remix-run/react';
 import { YouTubeVideo } from './YouTubeVideo';
+import { useState, useEffect } from 'react';
+import { getSupabaseClient } from '~/lib/supabase.client';
 
 interface GameDetailProps {
   game: Game;
+  t: TFunction;
+  supabaseUrl: string;
+  supabaseAnonKey: string;
 }
 
-export function GameDetail({ game }: GameDetailProps) {
-  const { t } = useTranslation();
+export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetailProps) {
   const location = useLocation();
   const shareUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}${location.pathname}`;
   const shareText = `${t('playNow')}: ${game.title}`;
@@ -64,7 +68,7 @@ export function GameDetail({ game }: GameDetailProps) {
       url: `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}`,
       icon: (
         <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+          <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
         </svg>
       ),
     },
@@ -98,6 +102,69 @@ export function GameDetail({ game }: GameDetailProps) {
     },
   };
 
+  const [isLiked, setIsLiked] = useState<boolean | null>(null);
+  const [isDisliked, setIsDisliked] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [likesCount, setLikesCount] = useState(game.likes || 0);
+  const [dislikesCount, setDislikesCount] = useState(game.dislikes || 0);
+
+  const handleFeedback = async (type: 'like' | 'dislike') => {
+    if (isLoading || typeof window === 'undefined') return;
+    const supabase = getSupabaseClient(supabaseUrl, supabaseAnonKey);
+    if (!supabase) return;
+
+    setIsLoading(true);
+
+    try {
+      const { data, error } = await supabase
+        .from('games')
+        .update({
+          [type === 'like' ? 'likes' : 'dislikes']: type === 'like' ? likesCount + 1 : dislikesCount + 1,
+        })
+        .eq('id', game.id);
+
+      if (error) throw error;
+
+      if (type === 'like') {
+        setLikesCount(prev => prev + 1);
+      } else {
+        setDislikesCount(prev => prev + 1);
+      }
+    } catch (error) {
+      console.error('Error updating feedback:', error);
+      // Revert counts on error
+      setLikesCount(game.likes || 0);
+      setDislikesCount(game.dislikes || 0);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Check existing feedback
+  useEffect(() => {
+    const checkExistingFeedback = async () => {
+      const sessionId = localStorage.getItem('session_id');
+      if (!sessionId) return;
+
+      const supabase = getSupabaseClient(supabaseUrl, supabaseAnonKey);
+      if (!supabase) return;
+
+      const { data } = await supabase
+        .from('game_feedback')
+        .select('feedback_type')
+        .eq('game_id', game.id)
+        .eq('session_id', sessionId)
+        .single();
+
+      if (data) {
+        setIsLiked(data.feedback_type === 'like');
+        setIsDisliked(data.feedback_type === 'dislike');
+      }
+    };
+
+    checkExistingFeedback();
+  }, [game.id]);
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Structured data */}
@@ -127,7 +194,13 @@ export function GameDetail({ game }: GameDetailProps) {
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 22V11M2 13V20C2 21.1046 2.89543 22 4 22H17.4262C18.907 22 20.1662 20.9197 20.3914 19.4562L21.4683 12.4562C21.7479 10.6389 20.3418 9 18.5032 9H15C14.4477 9 14 8.55228 14 8V4.46584C14 3.10399 12.896 2 11.5342 2C11.2093 2 10.915 2.1913 10.7831 2.48812L7.26394 10.4061C7.10344 10.7673 6.74532 11 6.35013 11H4C2.89543 11 2 11.8954 2 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            {game.likes.toLocaleString()}
+            {likesCount.toLocaleString()}
+          </span>
+          <span className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667v-5.43a2 2 0 00-1.105-1.79l-.05-.025A4 4 0 0011.055 2H5.64a2 2 0 00-1.962 1.608l-1.2 6A2 2 0 004.44 12H8v4a2 2 0 002 2 1 1 0 001-1v-.667a4 4 0 01.8-2.4l1.4-1.866a4 4 0 00.8-2.4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            {dislikesCount.toLocaleString()}
           </span>
         </div>
       </div>
@@ -289,6 +362,39 @@ export function GameDetail({ game }: GameDetailProps) {
                 </a>
               ))}
             </div>
+          </div>
+
+          {/* Feedback buttons */}
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => handleFeedback('like')}
+              disabled={isLoading}
+              className="flex items-center space-x-1 px-4 py-2 rounded-full transition-all duration-200 bg-gray-100 dark:bg-gray-700 hover:bg-green-100 dark:hover:bg-green-900"
+            >
+              <svg
+                className="w-5 h-5 text-green-500"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+              </svg>
+              <span>{likesCount}</span>
+            </button>
+
+            <button
+              onClick={() => handleFeedback('dislike')}
+              disabled={isLoading}
+              className="flex items-center space-x-1 px-4 py-2 rounded-full transition-all duration-200 bg-gray-100 dark:bg-gray-700 hover:bg-red-100 dark:hover:bg-red-900"
+            >
+              <svg
+                className="w-5 h-5 text-red-500"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667v-5.43a2 2 0 00-1.105-1.79l-.05-.025A4 4 0 0011.055 2H5.64a2 2 0 00-1.962 1.608l-1.2 6A2 2 0 004.44 12H8v4a2 2 0 002 2 1 1 0 001-1v-.667a4 4 0 01.8-2.4l1.4-1.866a4 4 0 00.8-2.4z" />
+              </svg>
+              <span>{dislikesCount}</span>
+            </button>
           </div>
         </div>
       </div>

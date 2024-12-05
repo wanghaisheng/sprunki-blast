@@ -47,7 +47,13 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
   const newHistory = await addGameToHistory(history, game.slug, game.thumbnail_url);
   
   return json(
-    { game },
+    { 
+      game,
+      env: {
+        SUPABASE_URL: process.env.SUPABASE_URL,
+        SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
+      },
+    },
     {
       headers: {
         'Set-Cookie': await gameHistoryCookie.serialize(newHistory),
@@ -57,12 +63,19 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 }
 
 export default function GameDetailPage() {
-  const { game } = useLoaderData<typeof loader>();
+  const { game, env } = useLoaderData<{ game: Game; env: { SUPABASE_URL: string; SUPABASE_ANON_KEY: string } }>();
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navigation />
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <GameDetail game={game} />
+        <GameDetail 
+          game={game} 
+          t={t} 
+          supabaseUrl={env.SUPABASE_URL} 
+          supabaseAnonKey={env.SUPABASE_ANON_KEY}
+        />
       </main>
     </div>
   );
