@@ -14,8 +14,9 @@ export const bn = {
     allGames: 'সব গেমস',
     noGames: 'কোন গেম পাওয়া যায়নি',
     share: 'শেয়ার করুন',
-    shareOn: '{{platform}}-এ শেয়ার করুন',
-    playNow: 'এখন খেলুন',
+    shareOn: '{{platform}} এ শেয়ার করুন',
+    playNow: 'এখনই খেলুন',
+    recentGames: 'সম্প্রতি খেলা গেমস',
   },
   categories: {
     puzzle: 'পাজল',

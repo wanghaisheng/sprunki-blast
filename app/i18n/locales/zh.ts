@@ -16,6 +16,7 @@ export const zh = {
     share: '分享',
     shareOn: '分享到{{platform}}',
     playNow: '立即玩',
+    recentGames: '最近玩过的游戏',
   },
   categories: {
     puzzle: '益智',

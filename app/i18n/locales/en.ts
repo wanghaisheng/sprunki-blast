@@ -16,6 +16,7 @@ export const en = {
     share: 'Share',
     shareOn: 'Share on {{platform}}',
     playNow: 'Play Now',
+    recentGames: 'Recently Played Games',
   },
   categories: {
     puzzle: 'Puzzle',

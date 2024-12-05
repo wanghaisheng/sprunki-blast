@@ -16,6 +16,7 @@ export const fr = {
     noGames: 'Aucun jeu trouvé',
     share: 'Partager',
     shareOn: 'Partager sur {{platform}}',
+    recentGames: 'Jeux Récents',
   },
   categories: {
     puzzle: 'Puzzle',

@@ -12,10 +12,11 @@ export const hi = {
     newGames: 'नए खेल',
     popularGames: 'लोकप्रिय खेल',
     allGames: 'सभी खेल',
-    noGames: 'कोई खेल नहीं मिला',
+    noGames: 'कोई गेम नहीं मिला',
     share: 'शेयर करें',
     shareOn: '{{platform}} पर शेयर करें',
     playNow: 'अभी खेलें',
+    recentGames: 'हाल ही में खेले गए गेम्स',
   },
   categories: {
     puzzle: 'पहेली',

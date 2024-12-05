@@ -5,6 +5,7 @@ import type { Game } from '~/types';
 import { supabase } from '~/lib/supabase.server';
 import { GameDetail } from '~/components/GameDetail';
 import { Navigation } from '~/components/Navigation';
+import { getGameHistory, addGameToHistory, gameHistoryCookie } from '~/utils/gameHistory.server';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data?.game) {
@@ -29,7 +30,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   ];
 };
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ params, request }: LoaderFunctionArgs) {
   const { data: game, error } = await supabase
     .from('games')
     .select('*')
@@ -41,7 +42,18 @@ export async function loader({ params }: LoaderFunctionArgs) {
     throw new Response('Not Found', { status: 404 });
   }
 
-  return json({ game });
+  // Update game history cookie
+  const history = await getGameHistory(request);
+  const newHistory = await addGameToHistory(history, game.slug, game.thumbnail_url);
+  
+  return json(
+    { game },
+    {
+      headers: {
+        'Set-Cookie': await gameHistoryCookie.serialize(newHistory),
+      },
+    }
+  );
 }
 
 export default function GameDetailPage() {

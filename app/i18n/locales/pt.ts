@@ -16,6 +16,7 @@ export const pt = {
     noGames: 'Nenhum jogo encontrado',
     share: 'Compartilhar',
     shareOn: 'Compartilhar no {{platform}}',
+    recentGames: 'Jogos Recentes',
   },
   categories: {
     puzzle: 'Quebra-cabeça',

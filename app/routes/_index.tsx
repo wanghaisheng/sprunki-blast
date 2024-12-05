@@ -2,13 +2,18 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GameGrid } from '~/components/GameGrid';
 import { Navigation } from '~/components/Navigation';
+import { RecentPlayedGames } from '~/components/RecentPlayedGames';
 import { supabase } from '~/lib/supabase.server';
-import type { MetaFunction, LoaderFunction } from '@remix-run/node';
+import type { MetaFunction, LoaderFunctionArgs } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { Game } from '~/types';
+import { getGameHistory } from '~/utils/gameHistory.server';
 
-export const loader: LoaderFunction = async () => {
+export async function loader({ request }: LoaderFunctionArgs) {
+  // Fetch recent games from cookie
+  const recentGames = await getGameHistory(request);
+
   // Fetch featured and new games
   const [featuredGamesResponse, newGamesResponse] = await Promise.all([
     supabase
@@ -36,6 +41,7 @@ export const loader: LoaderFunction = async () => {
   }
 
   return json({
+    recentGames,
     featuredGames: featuredGamesResponse.data,
     newGames: newGamesResponse.data,
   });
@@ -50,23 +56,21 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   const { t, i18n } = useTranslation();
-  const { featuredGames, newGames } = useLoaderData<{
-    featuredGames: Game[];
-    newGames: Game[];
-  }>();
+  const { featuredGames, newGames, recentGames } = useLoaderData<typeof loader>();
 
-  // Set English as the default language
   useEffect(() => {
-    if (i18n.language !== 'en') {
-      i18n.changeLanguage('en');
-    }
-  }, [i18n]);
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navigation />
-
+      
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Recent Games */}
+        <RecentPlayedGames games={recentGames} />
+
+        {/* Featured Games */}
         <section className="mb-12">
           <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
             {t('common.featuredGames')}
@@ -74,6 +78,7 @@ export default function Index() {
           <GameGrid games={featuredGames} />
         </section>
 
+        {/* New Games */}
         <section>
           <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
             {t('common.newGames')}

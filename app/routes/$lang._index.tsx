@@ -3,13 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { useParams, redirect } from '@remix-run/react';
 import { GameGrid } from '~/components/GameGrid';
 import { Navigation } from '~/components/Navigation';
+import { RecentPlayedGames } from '~/components/RecentPlayedGames';
 import { supabase } from '~/lib/supabase.server';
-import type { MetaFunction, LoaderFunction } from '@remix-run/node';
+import type { MetaFunction, LoaderFunctionArgs } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { Game } from '~/types';
+import { getGameHistory } from '~/utils/gameHistory.server';
 
-export const loader: LoaderFunction = async ({ params }) => {
+export async function loader({ params, request }: LoaderFunctionArgs) {
   // Validate language parameter
   const validLanguages = ['en', 'zh', 'es', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja', 'fr'];
   if (!params.lang) {
@@ -24,6 +26,9 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (lang === 'en') {
     return redirect('/');
   }
+
+  // Fetch recent games from cookie
+  const recentGames = await getGameHistory(request);
 
   // Fetch featured and new games with language filter
   const [featuredGamesResponse, newGamesResponse] = await Promise.all([
@@ -53,12 +58,8 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw new Error('Failed to fetch new games');
   }
 
-  // If no games found for the language, redirect to default route
-  // if (featuredGamesResponse.data.length === 0 && newGamesResponse.data.length === 0) {
-  //   return redirect('/');
-  // }
-
   return json({
+    recentGames,
     featuredGames: featuredGamesResponse.data,
     newGames: newGamesResponse.data,
   });
@@ -74,23 +75,23 @@ export const meta: MetaFunction = () => {
 export default function LanguageIndex() {
   const { t, i18n } = useTranslation();
   const { lang } = useParams();
-  const { featuredGames, newGames } = useLoaderData<{
-    featuredGames: Game[];
-    newGames: Game[];
-  }>();
+  const { featuredGames, newGames, recentGames } = useLoaderData<typeof loader>();
 
-  // Update language based on URL parameter
   useEffect(() => {
-    if (lang && lang !== i18n.language) {
+    if (i18n.language !== lang) {
       i18n.changeLanguage(lang);
     }
-  }, [lang, i18n]);
+  }, [i18n, lang]);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navigation />
-
+      
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Recent Games */}
+        <RecentPlayedGames games={recentGames} />
+
+        {/* Featured Games */}
         {featuredGames.length > 0 && (
           <section className="mb-12">
             <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">
@@ -100,6 +101,7 @@ export default function LanguageIndex() {
           </section>
         )}
 
+        {/* New Games */}
         {newGames.length > 0 && (
           <section>
             <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">

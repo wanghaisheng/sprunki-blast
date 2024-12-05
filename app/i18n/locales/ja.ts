@@ -16,6 +16,7 @@ export const ja = {
     noGames: 'ゲームが見つかりません',
     share: 'シェア',
     shareOn: '{{platform}}でシェア',
+    recentGames: '最近プレイしたゲーム',
   },
   categories: {
     puzzle: 'パズル',

@@ -15,7 +15,8 @@ export const ru = {
     noGames: 'Игры не найдены',
     share: 'Поделиться',
     shareOn: 'Поделиться в {{platform}}',
-    playNow: 'Играть Сейчас',
+    playNow: 'Играть',
+    recentGames: 'Недавно Сыгранные',
   },
   categories: {
     puzzle: 'Головоломки',

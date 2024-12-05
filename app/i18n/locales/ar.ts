@@ -13,6 +13,10 @@ export const ar = {
     popularGames: 'الألعاب الشائعة',
     allGames: 'جميع الألعاب',
     noGames: 'لم يتم العثور على ألعاب',
+    share: 'مشاركة',
+    shareOn: 'مشاركة على {{platform}}',
+    playNow: 'العب الآن',
+    recentGames: 'الألعاب التي لعبت مؤخراً',
   },
   categories: {
     puzzle: 'ألغاز',
