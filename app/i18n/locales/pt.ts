@@ -14,10 +14,13 @@ export const pt = {
     newGames: 'Novos Jogos',
     popularGames: 'Jogos Populares',
     allGames: 'Todos os Jogos',
+    allGamesDescription: 'Jogue qualquer jogo que quiser, em qualquer lugar, a qualquer hora!',
     noGames: 'Nenhum jogo encontrado',
     share: 'Compartilhar',
     shareOn: 'Compartilhar no {{platform}}',
     recentGames: 'Jogos Recentes',
+    newGamesDescription: 'Jogue os jogos casuais mais novos e emocionantes!',
+    popularGamesDescription: 'Jogue os jogos casuais mais populares!',
   },
   categories: {
     puzzle: 'Quebra-cabeça',

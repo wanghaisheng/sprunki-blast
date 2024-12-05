@@ -18,6 +18,9 @@ export const en = {
     playNow: 'Play Now',
     playAgain: 'Play Again',
     recentGames: 'Recently Played Games',
+    allGamesDescription: 'Play any game you want, anywhere, at any time!',
+    newGamesDescription: 'Play the latest and most exciting casual games!',
+    popularGamesDescription: 'Play the most popular casual games!',
   },
   categories: {
     puzzle: 'Puzzle',

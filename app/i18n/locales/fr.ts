@@ -14,10 +14,13 @@ export const fr = {
     newGames: 'Nouveaux Jeux',
     popularGames: 'Jeux Populaires',
     allGames: 'Tous les Jeux',
+    allGamesDescription: 'Jouez à tous les jeux que vous voulez, n\'importe où, n\'importe quand !',
     noGames: 'Aucun jeu trouvé',
     share: 'Partager',
     shareOn: 'Partager sur {{platform}}',
     recentGames: 'Jeux Récents',
+    newGamesDescription: 'Jouez aux jeux occasionnels les plus récents et les plus excitants !',
+    popularGamesDescription: 'Jouez aux jeux occasionnels les plus populaires !',
   },
   categories: {
     puzzle: 'Puzzle',

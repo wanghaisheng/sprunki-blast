@@ -14,10 +14,13 @@ export const es = {
     newGames: 'Juegos Nuevos',
     popularGames: 'Juegos Populares',
     allGames: 'Todos los Juegos',
+    allGamesDescription: '¡Juega cualquier juego que quieras, donde sea, cuando sea!',
     noGames: 'No se encontraron juegos',
     share: 'Compartir',
     shareOn: 'Compartir en {{platform}}',
     recentGames: 'Juegos Recientes',
+    newGamesDescription: '¡Juega los juegos casuales más nuevos y emocionantes!',
+    popularGamesDescription: '¡Juega los juegos casuales más populares!',
   },
   categories: {
     puzzle: 'Rompecabezas',
