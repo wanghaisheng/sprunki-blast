@@ -22,7 +22,7 @@ export function Hero() {
   ];
 
   return (
-    <div className="relative mb-12 overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_top_left,theme(colors.purple.600),transparent_50%),radial-gradient(circle_at_bottom_right,theme(colors.blue.600),transparent_50%),radial-gradient(circle_at_center,theme(colors.indigo.600),theme(colors.indigo.800))] shadow-xl">
+    <section className="relative mb-12 overflow-hidden rounded-2xl bg-[radial-gradient(circle_at_top_left,theme(colors.purple.600),transparent_50%),radial-gradient(circle_at_bottom_right,theme(colors.blue.600),transparent_50%),radial-gradient(circle_at_center,theme(colors.indigo.600),theme(colors.indigo.800))] shadow-xl">
       {/* Background pattern */}
       {/* <div className="absolute inset-0 z-0 opacity-20 bg-[linear-gradient(white_2px,transparent_2px),linear-gradient(90deg,white_2px,transparent_2px)] bg-[size:40px_40px]" /> */}
 
@@ -70,6 +70,6 @@ export function Hero() {
           <ImageCarousel images={featuredImages} />
         </div>
       </div>
-    </div>
+    </section>
   );
 }

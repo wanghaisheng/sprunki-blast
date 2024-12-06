@@ -32,8 +32,8 @@ export function Navigation() {
             {t('common.title')}
           </Link>
           
-          <nav className="flex items-center gap-6">
-            <div className="flex items-center gap-6">
+          <nav className="flex items-center gap-4">
+            <div className="flex items-center gap-4">
               {navItems.map((item) => (
                 <Link
                   key={item.key}
@@ -48,10 +48,11 @@ export function Navigation() {
                 </Link>
               ))}
             </div>
-            <div className="pl-2 border-l border-gray-700">
-              <LanguageSelector />
-            </div>
           </nav>
+
+          <div className="pl-2 border-gray-700">
+            <LanguageSelector />
+          </div>
         </div>
       </div>
     </header>
