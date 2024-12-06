@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Navigation } from '~/components/Navigation';
-import { GameCategory } from '~/components/GameCategory';
+import { SimpleGameCategory } from '~/components/SimpleGameCategory';
 import { supabase } from '~/lib/supabase.server';
 import type { LoaderFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
@@ -35,6 +35,12 @@ export default function AllGames() {
     return acc;
   }, {});
 
+  // Split categories into two columns
+  const categories = Object.entries(gamesByCategory);
+  const midPoint = Math.ceil(categories.length / 2);
+  const leftColumn = categories.slice(0, midPoint);
+  const rightColumn = categories.slice(midPoint);
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navigation />
@@ -49,19 +55,32 @@ export default function AllGames() {
           </p>
         </div>
 
-        {Object.entries(gamesByCategory).map(([category, games]) => (
-          <GameCategory
-            key={category}
-            category={category}
-            games={games}
-          />
-        ))}
-
-        {games.length === 0 && (
+        {games.length === 0 ? (
           <div className="text-center">
             <h2 className="text-xl font-medium text-gray-900 dark:text-white">
               {t('common.noGames')}
             </h2>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <div className="space-y-12">
+              {leftColumn.map(([category, games]) => (
+                <SimpleGameCategory
+                  key={category}
+                  category={category}
+                  games={games}
+                />
+              ))}
+            </div>
+            <div className="space-y-12">
+              {rightColumn.map(([category, games]) => (
+                <SimpleGameCategory
+                  key={category}
+                  category={category}
+                  games={games}
+                />
+              ))}
+            </div>
           </div>
         )}
       </main>

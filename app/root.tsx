@@ -171,7 +171,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <footer className="w-full py-6 px-4 mt-auto border-t border-gray-800">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-gray-400 text-sm">
-              &copy; {new Date().getFullYear()} <Link to="https://casualgame.studio" className="hover:underline">Casual Game Studio</Link>. All rights reserved.
+              &copy; {new Date().getFullYear()} <Link to="https://hypercgstudio.com" className="hover:underline">HyperCG Studio</Link>. All rights reserved.
             </div>
             <div className="flex gap-4">
               {socialLinks.map((link) => (
