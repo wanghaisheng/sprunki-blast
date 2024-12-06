@@ -11,7 +11,7 @@ import type { Game } from '~/types';
 
 export const loader: LoaderFunction = async ({ params }) => {
   // Validate language parameter
-  const validLanguages = ['en', 'zh', 'es', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja', 'fr'];
+  const validLanguages = ['en', 'zh', 'es', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja', 'fr', 'de', 'ko', 'it', 'tr', 'id', 'nl', 'el', 'th', 'sv'];
   const language = params.lang ?? 'en';
   if (!validLanguages.includes(language)) {
     return redirect('/en/popular-games');

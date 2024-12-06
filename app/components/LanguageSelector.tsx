@@ -14,6 +14,15 @@ const languages = [
   { code: 'ru', name: 'Russian', nativeName: 'Русский', flag: '🇷🇺' },
   { code: 'ja', name: 'Japanese', nativeName: '日本語', flag: '🇯🇵' },
   { code: 'fr', name: 'French', nativeName: 'Français', flag: '🇫🇷' },
+  { code: 'de', name: 'German', nativeName: 'Deutsch', flag: '🇩🇪' },
+  { code: 'ko', name: 'Korean', nativeName: '한국어', flag: '🇰🇷' },
+  { code: 'it', name: 'Italian', nativeName: 'Italiano', flag: '🇮🇹' },
+  { code: 'tr', name: 'Turkish', nativeName: 'Türkçe', flag: '🇹🇷' },
+  { code: 'id', name: 'Indonesian', nativeName: 'Bahasa Indonesia', flag: '🇮🇩' },
+  { code: 'nl', name: 'Dutch', nativeName: 'Nederlands', flag: '🇳🇱' },
+  { code: 'el', name: 'Greek', nativeName: 'Ελλήνικα', flag: '🇬🇷' },
+  { code: 'th', name: 'Thai', nativeName: 'ไทย', flag: '🇹🇭' },
+  { code: 'sv', name: 'Swedish', nativeName: 'Svenska', flag: '🇸🇪' },
 ];
 
 export function LanguageSelector() {
@@ -83,23 +92,25 @@ export function LanguageSelector() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-full min-w-[280px] rounded-lg bg-white p-4 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800 sm:w-[480px]">
-          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:gap-4">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => handleLanguageChange(lang.code)}
-                className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <span className="text-base">{lang.flag}</span>
-                <div className="flex flex-col">
-                  <span className="font-medium">{lang.nativeName}</span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">
-                    {lang.name}
-                  </span>
-                </div>
-              </button>
-            ))}
+        <div className="absolute right-0 mt-2 w-full min-w-[280px] rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-gray-800 sm:w-[480px]">
+          <div className="max-h-[60vh] overflow-y-auto p-4">
+            <div className="grid grid-cols-1 gap-1 sm:grid-cols-3 sm:gap-4">
+              {languages.map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => handleLanguageChange(lang.code)}
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <span className="text-base">{lang.flag}</span>
+                  <div className="flex flex-col">
+                    <span className="font-medium">{lang.nativeName}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {lang.name}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}

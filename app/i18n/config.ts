@@ -12,6 +12,15 @@ import { bn } from './locales/bn';
 import { ru } from './locales/ru';
 import { ja } from './locales/ja';
 import { fr } from './locales/fr';
+import { de } from './locales/de';
+import { ko } from './locales/ko';
+import { it } from './locales/it';
+import { tr } from './locales/tr';
+import { id } from './locales/id';
+import { nl } from './locales/nl';
+import { el } from './locales/el';
+import { th } from './locales/th';
+import { sv } from './locales/sv';
 
 i18n
   .use(LanguageDetector)
@@ -28,6 +37,15 @@ i18n
       ru: { translation: ru },
       ja: { translation: ja },
       fr: { translation: fr },
+      de: { translation: de },
+      ko: { translation: ko },
+      it: { translation: it },
+      tr: { translation: tr },
+      id: { translation: id },
+      nl: { translation: nl },
+      el: { translation: el },
+      th: { translation: th },
+      sv: { translation: sv },
     },
     fallbackLng: 'en',
     interpolation: {

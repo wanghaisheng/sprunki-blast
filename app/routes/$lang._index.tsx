@@ -14,7 +14,7 @@ import { Hero } from "~/components/Hero";
 
 export async function loader({ params, request }: LoaderFunctionArgs) {
   // Validate language parameter
-  const validLanguages = ['en', 'zh', 'es', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja', 'fr'];
+  const validLanguages = ['en', 'zh', 'es', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja', 'fr', 'de', 'ko', 'it', 'tr', 'id', 'nl', 'el', 'th', 'sv'];
   if (!params.lang) {
     return redirect('/');
   }
