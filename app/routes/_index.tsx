@@ -22,6 +22,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       .select('*')
       .eq('status', 'active')
       .eq('is_featured', true)
+      .eq('audience_language', 'en')
       .order('plays', { ascending: false })
       .limit(8),
     supabase
@@ -29,6 +30,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
       .select('*')
       .eq('status', 'active')
       .eq('is_new', true)
+      .eq('audience_language', 'en')
       .order('release_date', { ascending: false })
       .limit(8)
   ]);

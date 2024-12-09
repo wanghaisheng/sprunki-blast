@@ -13,6 +13,7 @@ export const loader: LoaderFunction = async () => {
     .from('games')
     .select('*')
     .eq('status', 'active')
+    .eq('audience_language', 'en')
     .order('plays', { ascending: false })
     .order('likes', { ascending: false })
     .limit(20);

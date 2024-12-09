@@ -14,6 +14,7 @@ export const loader: LoaderFunction = async () => {
     .select('*')
     .eq('status', 'active')
     .eq('is_new', true)
+    .eq('audience_language', 'en')
     .order('release_date', { ascending: false })
     .limit(20);
 

@@ -92,7 +92,7 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
     description: game.description,
     image: game.thumbnail_url,
     genre: game.category,
-    inLanguage: game.game_language,
+    inLanguage: game.audience_language,
     datePublished: game.release_date,
     aggregateRating: {
       '@type': 'AggregateRating',
@@ -215,7 +215,7 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
             <iframe
               src={game.iframe_url}
               className="h-full w-full"
-              allowFullScreen
+              allowFullScreen 
               title={game.title}
             />
           </div>
@@ -338,6 +338,14 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
                 </dt>
                 <dd className="text-gray-700 dark:text-gray-300">
                   {game.source_url}
+                </dd>
+              </div>
+              <div>
+                <dt className="text-sm text-gray-500 dark:text-gray-400">
+                  {t('gameDetail.updatedAt')}
+                </dt>
+                <dd className="text-gray-700 dark:text-gray-300">
+                {new Date(game.updated_at).toLocaleDateString()}
                 </dd>
               </div>
             </dl>
