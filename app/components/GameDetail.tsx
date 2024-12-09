@@ -234,11 +234,9 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
               <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
                 {t('gameDetail.instructions')}
               </h2>
-              <div className="rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
-                <p className="text-gray-700 dark:text-gray-300">
-                  {game.instructions}
-                </p>
-              </div>
+              <p className="text-gray-700 dark:text-gray-300">
+                {game.instructions}
+              </p>
             </div>
           )}
 
