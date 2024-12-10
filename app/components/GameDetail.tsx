@@ -108,6 +108,30 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
   const [isLoading, setIsLoading] = useState(false);
   const [likesCount, setLikesCount] = useState(game.likes || 0);
   const [dislikesCount, setDislikesCount] = useState(game.dislikes || 0);
+  const [playsCount, setPlaysCount] = useState(game.plays || 0);
+  const [sharesCount, setSharesCount] = useState(game.shares || 0);
+
+  // Track plays after 3 seconds
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      const supabase = getSupabaseClient(supabaseUrl, supabaseAnonKey);
+      if (!supabase) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('games')
+          .update({ plays: game.plays + 1 })
+          .eq('id', game.id);
+
+        if (error) throw error;
+        setPlaysCount(prev => prev + 1);
+      } catch (error) {
+        console.error('Error updating plays count:', error);
+      }
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [game.id, game.plays, supabaseUrl, supabaseAnonKey]);
 
   const handleFeedback = async (type: 'like' | 'dislike') => {
     if (isLoading || typeof window === 'undefined') return;
@@ -138,6 +162,23 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
       setDislikesCount(game.dislikes || 0);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleShare = async (platform: string) => {
+    const supabase = getSupabaseClient(supabaseUrl, supabaseAnonKey);
+    if (!supabase) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('games')
+        .update({ shares: (game.shares || 0) + 1 })
+        .eq('id', game.id);
+
+      if (error) throw error;
+      setSharesCount(prev => prev + 1);
+    } catch (error) {
+      console.error('Error updating shares count:', error);
     }
   };
 
@@ -189,7 +230,14 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
               <path d="M14 8H16M16 8H18M16 8V6M16 8V10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
               <path d="M7 13H9M9 13H11M9 13V11M9 13V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
             </svg>
-            {game.plays.toLocaleString()}
+            {playsCount.toLocaleString()}
+          </span>
+          <span className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 11H5M19 11C20.1046 11 21 10.1046 21 9V6C21 4.89543 20.1046 4 19 4V4C17.8954 4 17 4.89543 17 6V9C17 10.1046 17.8954 11 19 11Z" stroke="currentColor" strokeWidth="2"/>
+              <path d="M17 16L21 12L17 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            {sharesCount.toLocaleString()}
           </span>
           <span className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -328,6 +376,9 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                   title={t('shareOn', { platform: platform.name })}
+                  onClick={(e) => {
+                    handleShare(platform.name);
+                  }}
                 >
                   {platform.icon}
                   <span>{platform.name}</span>
