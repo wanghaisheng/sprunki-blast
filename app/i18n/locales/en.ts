@@ -1,7 +1,7 @@
 export const en = {
   common: {
     title: 'Hyper Casual Games',
-    description: 'Play the best free hyper casual games online. No need to download, just play! Discover puzzle, arcade, action, racing, sports, board, card, shooter, match3 and music games. New games added daily!',
+    description: 'Play the best free hyper casual games online. No need to download, just play! Discover puzzle, arcade, action, racing, sports, board, card, shooting, match3 and music games. New games added daily!',
     keywords: 'hyper casual games, free games, online games, puzzle games, arcade games, action games, racing games, sports games, board games, card games, shooting games, match3 games, music games',
     play: 'Play',
     categories: 'Categories',

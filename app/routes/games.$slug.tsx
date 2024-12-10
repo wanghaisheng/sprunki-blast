@@ -24,10 +24,12 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { 'og:description': game.description },
     { 'og:image': game.thumbnail_url },
     { 'og:type': 'website' },
+    { 'og:url': 'https://hypercasualgames.online' },
     { 'twitter:card': 'summary_large_image' },
     { 'twitter:title': game.title },
     { 'twitter:description': game.description },
     { 'twitter:image': game.thumbnail_url },
+    { 'twitter:url': 'https://hypercasualgames.online' },
   ];
 };
 

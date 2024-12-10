@@ -54,17 +54,19 @@ export const meta: MetaFunction = () => {
   const { t } = useTranslation();
 
   return [
-    { title: t('common.title') },
+    { title: t('common.title') + '- Play the best free hyper casual games online' },
     { name: 'description', content: t('common.description') },
     { name: 'keywords', content: t('common.keywords') },
     { 'og:title': t('common.title') },
     { 'og:description': t('common.description') },
     { 'og:image': "./logo.png" },
     { 'og:type': 'website' },
+    { 'og:url': 'https://hypercasualgames.online' },
     { 'twitter:card': 'summary_large_image' },
     { 'twitter:title': t('common.title') },
     { 'twitter:description': t('common.description') },
     { 'twitter:image': "./logo.png" },
+    { 'twitter:url': 'https://hypercasualgames.online' },
   ];
 };
 

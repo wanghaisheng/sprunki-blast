@@ -44,10 +44,12 @@ export const meta: MetaFunction = () => {
     { 'og:description': t('common.description') },
     { 'og:image': "./logo.png" },
     { 'og:type': 'website' },
+    { 'og:url': 'https://hypercasualgames.online' },
     { 'twitter:card': 'summary_large_image' },
     { 'twitter:title': t('common.newGames') + ' - ' + t('common.title') },
     { 'twitter:description': t('common.description') },
     { 'twitter:image': "./logo.png" },
+    { 'twitter:url': 'https://hypercasualgames.online' },
   ];
 };
 
