@@ -388,11 +388,11 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
           </div>
 
           {/* Game details */}
-          <div className="mb-8 py-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+          <div className="mb-8 py-4 rounded-lg">
             <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
               {t('gameDetail.details')}
             </h2>
-            <dl className="space-y-2 px-4 mb-4">
+            <dl className="space-y-2 mb-4">
               <div>
                 <dt className="text-sm text-gray-500 dark:text-gray-400">
                   {t('gameDetail.releaseDate')}
