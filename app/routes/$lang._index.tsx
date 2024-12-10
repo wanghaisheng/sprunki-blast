@@ -67,9 +67,20 @@ export async function loader({ params, request }: LoaderFunctionArgs) {
 };
 
 export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
+
   return [
-    { title: "Casual Games" },
-    { name: "description", content: "Play awesome casual games!" },
+    { title: t('common.title') },
+    { name: 'description', content: t('common.description') },
+    { name: 'keywords', content: t('common.keywords') },
+    { 'og:title': t('common.title') },
+    { 'og:description': t('common.description') },
+    { 'og:image': "./logo.png" },
+    { 'og:type': 'website' },
+    { 'twitter:card': 'summary_large_image' },
+    { 'twitter:title': t('common.title') },
+    { 'twitter:description': t('common.description') },
+    { 'twitter:image': "./logo.png" },
   ];
 };
 

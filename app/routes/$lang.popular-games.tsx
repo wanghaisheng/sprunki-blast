@@ -37,10 +37,17 @@ export const loader: LoaderFunction = async ({ params }) => {
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
   return [
-    {
-      title: `${t('common.popular')} - ${t('common.title')}`,
-      description: `${t('common.description')}`,
-    }
+    { title: t('common.popularGames') + ' - ' + t('common.title') },
+    { name: 'description', content: t('common.description') },
+    { name: 'keywords', content: t('common.keywords') },
+    { 'og:title': t('common.popularGames') + ' - ' + t('common.title') },
+    { 'og:description': t('common.description') },
+    { 'og:image': "./logo.png" },
+    { 'og:type': 'website' },
+    { 'twitter:card': 'summary_large_image' },
+    { 'twitter:title': t('common.popularGames') + ' - ' + t('common.title') },
+    { 'twitter:description': t('common.description') },
+    { 'twitter:image': "./logo.png" },
   ];
 };
 

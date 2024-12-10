@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Navigation } from '~/components/Navigation';
 import { GameGrid } from '~/components/GameGrid';
 import { supabase } from '~/lib/supabase.server';
-import type { LoaderFunction } from '@remix-run/node';
+import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { Game } from '~/types';
@@ -25,10 +25,20 @@ export const loader: LoaderFunction = async () => {
   return json({ games: games || [] });
 };
 
-export const meta: LoaderFunction = () => {
+export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
   return [
-    { title: "New Games - Casual Games" },
-    { name: "description", content: "Check out our latest casual games!" },
+    { title: t('common.newGames') + ' - ' + t('common.title') },
+    { name: 'description', content: t('common.description') },
+    { name: 'keywords', content: t('common.keywords') },
+    { 'og:title': t('common.newGames') + ' - ' + t('common.title') },
+    { 'og:description': t('common.description') },
+    { 'og:image': "./logo.png" },
+    { 'og:type': 'website' },
+    { 'twitter:card': 'summary_large_image' },
+    { 'twitter:title': t('common.newGames') + ' - ' + t('common.title') },
+    { 'twitter:description': t('common.description') },
+    { 'twitter:image': "./logo.png" },
   ];
 };
 

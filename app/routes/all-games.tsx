@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Navigation } from '~/components/Navigation';
 import { SimpleGameCategory } from '~/components/SimpleGameCategory';
 import { supabase } from '~/lib/supabase.server';
-import type { LoaderFunction } from '@remix-run/node';
+import type { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import type { Game } from '~/types';
@@ -21,6 +21,23 @@ export const loader: LoaderFunction = async () => {
   }
 
   return json({ games: games || [] });
+};
+
+export const meta: MetaFunction = () => {
+  const { t } = useTranslation();
+  return [
+    { title: t('common.allGames') + ' - ' + t('common.title') },
+    { name: 'description', content: t('common.description') },
+    { name: 'keywords', content: t('common.keywords') },
+    { 'og:title': t('common.allGames') + ' - ' + t('common.title') },
+    { 'og:description': t('common.description') },
+    { 'og:image': "./logo.png" },
+    { 'og:type': 'website' },
+    { 'twitter:card': 'summary_large_image' },
+    { 'twitter:title': t('common.allGames') + ' - ' + t('common.title') },
+    { 'twitter:description': t('common.description') },
+    { 'twitter:image': "./logo.png" },
+  ];
 };
 
 export default function AllGames() {

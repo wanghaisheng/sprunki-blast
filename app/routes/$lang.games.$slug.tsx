@@ -19,6 +19,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [
     { title: `${game.title} - Casual Game Studio` },
     { description: game.description },
+    { keywords: game.tags.join(', ') },
     { 'og:title': game.title },
     { 'og:description': game.description },
     { 'og:image': game.thumbnail_url },
