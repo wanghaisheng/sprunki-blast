@@ -206,20 +206,20 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
         </div>
       </div>
 
+      {/* Game iframe */}
+      <div className="mb-8 aspect-video w-full overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
+        <iframe
+          src={game.iframe_url}
+          className="h-full w-full"
+          allowFullScreen 
+          title={game.title}
+        />
+      </div>
+
       {/* Game content */}
       <div className="grid gap-8 lg:grid-cols-3">
         {/* Main content */}
         <div className="lg:col-span-2">
-          {/* Game iframe */}
-          <div className="mb-8 aspect-video w-full overflow-hidden rounded-xl bg-gray-100 dark:bg-gray-800">
-            <iframe
-              src={game.iframe_url}
-              className="h-full w-full"
-              allowFullScreen 
-              title={game.title}
-            />
-          </div>
-
           {/* Description */}
           <div className="mb-8">
             <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
@@ -281,24 +281,60 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
 
         {/* Sidebar */}
         <div>
-          {/* Tags */}
-          {game.tags.length > 0 && (
-            <div className="mb-8">
-              <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-                {t('gameDetail.tags')}
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {game.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+          {/* Feedback buttons */}
+          <div className="flex mb-8 items-center space-x-4">
+            <button
+              onClick={() => handleFeedback('like')}
+              disabled={isLoading}
+              className="flex items-center space-x-1 px-4 py-2 rounded-full transition-all duration-200 bg-gray-100 dark:bg-gray-700 hover:bg-green-100 dark:hover:bg-green-900"
+            >
+              <svg
+                className="w-5 h-5 text-green-500"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+              </svg>
+              <span>{likesCount}</span>
+            </button>
+
+            <button
+              onClick={() => handleFeedback('dislike')}
+              disabled={isLoading}
+              className="flex items-center space-x-1 px-4 py-2 rounded-full transition-all duration-200 bg-gray-100 dark:bg-gray-700 hover:bg-red-100 dark:hover:bg-red-900"
+            >
+              <svg
+                className="w-5 h-5 text-red-500"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667v-5.43a2 2 0 00-1.105-1.79l-.05-.025A4 4 0 0011.055 2H5.64a2 2 0 00-1.962 1.608l-1.2 6A2 2 0 004.44 12H8v4a2 2 0 002 2 1 1 0 001-1v-.667a4 4 0 01.8-2.4l1.4-1.866a4 4 0 00.8-2.4z" />
+              </svg>
+              <span>{dislikesCount}</span>
+            </button>
+          </div>
+
+          {/* Share section */}
+          <div className="mb-8">
+            <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
+              {t('gameDetail.share')}
+            </h2>
+            <div className="flex flex-wrap gap-4">
+              {shareLinks.map((platform) => (
+                <a
+                  key={platform.name}
+                  href={platform.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                  title={t('shareOn', { platform: platform.name })}
+                >
+                  {platform.icon}
+                  <span>{platform.name}</span>
+                </a>
+              ))}
             </div>
-          )}
+          </div>
 
           {/* Game details */}
           <div className="mb-8 py-4 rounded-lg bg-gray-50 dark:bg-gray-800">
@@ -349,60 +385,24 @@ export function GameDetail({ game, t, supabaseUrl, supabaseAnonKey }: GameDetail
             </dl>
           </div>
 
-          {/* Share section */}
-          <div className="mb-8">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900 dark:text-white">
-              {t('gameDetail.share')}
-            </h2>
-            <div className="flex flex-wrap gap-4">
-              {shareLinks.map((platform) => (
-                <a
-                  key={platform.name}
-                  href={platform.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                  title={t('shareOn', { platform: platform.name })}
-                >
-                  {platform.icon}
-                  <span>{platform.name}</span>
-                </a>
-              ))}
+          {/* Tags */}
+          {game.tags.length > 0 && (
+            <div className="mb-8">
+              <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+                {t('gameDetail.tags')}
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {game.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-gray-100 px-3 py-1 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
-
-          {/* Feedback buttons */}
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => handleFeedback('like')}
-              disabled={isLoading}
-              className="flex items-center space-x-1 px-4 py-2 rounded-full transition-all duration-200 bg-gray-100 dark:bg-gray-700 hover:bg-green-100 dark:hover:bg-green-900"
-            >
-              <svg
-                className="w-5 h-5 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-              </svg>
-              <span>{likesCount}</span>
-            </button>
-
-            <button
-              onClick={() => handleFeedback('dislike')}
-              disabled={isLoading}
-              className="flex items-center space-x-1 px-4 py-2 rounded-full transition-all duration-200 bg-gray-100 dark:bg-gray-700 hover:bg-red-100 dark:hover:bg-red-900"
-            >
-              <svg
-                className="w-5 h-5 text-red-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667v-5.43a2 2 0 00-1.105-1.79l-.05-.025A4 4 0 0011.055 2H5.64a2 2 0 00-1.962 1.608l-1.2 6A2 2 0 004.44 12H8v4a2 2 0 002 2 1 1 0 001-1v-.667a4 4 0 01.8-2.4l1.4-1.866a4 4 0 00.8-2.4z" />
-              </svg>
-              <span>{dislikesCount}</span>
-            </button>
-          </div>
+          )}
         </div>
       </div>
     </div>
