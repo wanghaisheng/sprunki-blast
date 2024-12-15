@@ -44,6 +44,11 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap",
   },
+  {
+    rel: "script",
+    href: "https://www.googletagmanager.com/gtag/js?id=G-XZCSF5EH1D",
+    async: true,
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -197,5 +202,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  useEffect(() => {
+    // Initialize Google Analytics
+    window.dataLayer = window.dataLayer || [];
+    function gtag(...args: any[]) {
+      window.dataLayer.push(args);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-XZCSF5EH1D');
+  }, []);
+
+  return (
+    <Layout>
+      <Outlet />
+    </Layout>
+  );
 }
