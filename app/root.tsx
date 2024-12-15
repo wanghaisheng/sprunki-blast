@@ -201,15 +201,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+declare global {
+  interface Window {
+    dataLayer: any[];
+    gtag: (...args: any[]) => void;
+  }
+}
+
 export default function App() {
   useEffect(() => {
     // Initialize Google Analytics
     window.dataLayer = window.dataLayer || [];
-    function gtag(...args: any[]) {
-      window.dataLayer.push(args);
-    }
-    gtag('js', new Date());
-    gtag('config', 'G-XZCSF5EH1D');
+    window.gtag = function(...args) {
+      window.dataLayer.push(arguments);
+    };
+    window.gtag('js', new Date());
+    window.gtag('config', 'G-XZCSF5EH1D');
   }, []);
 
   return (
