@@ -28,19 +28,19 @@ export const loader: LoaderFunction = async () => {
 export const meta: MetaFunction = () => {
   const { t } = useTranslation();
   return [
-    { title: t('common.popularGames') + ' - ' + t('common.title') },
+    { title: t('common.popularGames') + ' - ' + t('common.metaTitle') },
     { name: 'description', content: t('common.description') },
     { name: 'keywords', content: t('common.keywords') },
-    { 'og:title': t('common.popularGames') + ' - ' + t('common.title') },
+    { 'og:title': t('common.popularGames') + ' - ' + t('common.metaTitle') },
     { 'og:description': t('common.description') },
     { 'og:image': "./logo.png" },
     { 'og:type': 'website' },
-    { 'og:url': 'https://hypercasualgames.online' },
+    { 'og:url': 'https://hypercasualgames.online/popular-games' },
     { 'twitter:card': 'summary_large_image' },
-    { 'twitter:title': t('common.popularGames') + ' - ' + t('common.title') },
+    { 'twitter:title': t('common.popularGames') + ' - ' + t('common.metaTitle') },
     { 'twitter:description': t('common.description') },
     { 'twitter:image': "./logo.png" },
-    { 'twitter:url': 'https://hypercasualgames.online' },
+    { 'twitter:url': 'https://hypercasualgames.online/popular-games' },
   ];
 };
 

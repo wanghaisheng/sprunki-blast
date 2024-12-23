@@ -17,19 +17,19 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   const { game } = data;
   return [
-    { title: `${game.title} - Casual Game Studio` },
+    { title: `${game.title} - Hyper Casual Games Online` },
     { description: game.description },
     { keywords: game.tags.join(', ') },
     { 'og:title': game.title },
     { 'og:description': game.description },
     { 'og:image': game.thumbnail_url },
     { 'og:type': 'website' },
-    { 'og:url': 'https://hypercasualgames.online' },
+    { 'og:url': `https://hypercasualgames.online/game/${game.slug}` },
     { 'twitter:card': 'summary_large_image' },
     { 'twitter:title': game.title },
     { 'twitter:description': game.description },
     { 'twitter:image': game.thumbnail_url },
-    { 'twitter:url': 'https://hypercasualgames.online' },
+    { 'twitter:url': `https://hypercasualgames.online/game/${game.slug}` },
   ];
 };
 

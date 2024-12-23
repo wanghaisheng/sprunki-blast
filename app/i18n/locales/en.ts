@@ -1,8 +1,9 @@
 export const en = {
   common: {
     title: 'Hyper Casual Games',
-    description: 'Play the best free hyper casual games online. No need to download, just play! Discover puzzle, arcade, action, racing, sports, board, card, shooting, match3 and music games. New games added daily!',
-    keywords: 'hyper casual games, free games, online games, puzzle games, arcade games, action games, racing games, sports games, board games, card games, shooting games, match3 games, music games',
+    metaTitle: 'Free Hyper Casual Games Online | No App Download Required',
+    description: 'Play popular hyper casual games from App Store and Google Play instantly in your browser. No downloads needed!',
+    keywords: 'app store games online, mobile games in browser, free hyper casual games, play app store games without downloading, instant play mobile games online, no download hyper casual games, popular app store games in browser, play android games without installation',
     play: 'Play',
     categories: 'Categories',
     featured: 'Featured',

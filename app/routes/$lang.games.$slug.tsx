@@ -1,5 +1,5 @@
 import { json, type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { useLoaderData, useParams } from '@remix-run/react';
 import { useTranslation } from 'react-i18next';
 import type { Game } from '~/types';
 import { supabase } from '~/lib/supabase.server';
@@ -8,6 +8,8 @@ import { Navigation } from '~/components/Navigation';
 import { getGameHistory, addGameToHistory, gameHistoryCookie } from '~/utils/gameHistory.server';
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  const params = useParams();
+
   if (!data?.game) {
     return [
       { title: 'Game Not Found' },
@@ -17,19 +19,19 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   const { game } = data;
   return [
-    { title: `${game.title} - Casual Game Studio` },
+    { title: `${game.title} - Hyper Casual Games Online` },
     { description: game.description },
     { keywords: game.tags.join(', ') },
     { 'og:title': game.title },
     { 'og:description': game.description },
     { 'og:image': game.thumbnail_url },
     { 'og:type': 'website' },
-    { 'og:url': 'https://hypercasualgames.online' },
+    { 'og:url': `https://hypercasualgames.online/${params.lang}/game/${game.slug}` },
     { 'twitter:card': 'summary_large_image' },
     { 'twitter:title': game.title },
     { 'twitter:description': game.description },
     { 'twitter:image': game.thumbnail_url },
-    { 'twitter:url': 'https://hypercasualgames.online' },
+    { 'twitter:url': `https://hypercasualgames.online/${params.lang}/game/${game.slug}` },
   ];
 };
 
